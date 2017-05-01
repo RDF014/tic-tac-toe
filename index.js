@@ -1,8 +1,6 @@
-console.log(['-','-','-']);
-console.log(['x','o', '-']);
-console.log(['-','-','-']);
 
-prompt('hello');
+
+const prompt = require('prompt');
 
 class TicTacToe {
   constructor() {
@@ -11,6 +9,10 @@ class TicTacToe {
   }
 
   checkIfWon() {
+    this.matrix.forEach(row => {
+      console.log(row);
+    });
+    this.placePiece();
     // recursively check if there is any winning solutions
       // if true, then announce winner and reset board and onDeck
       // if false, then change onDeck to be next player
@@ -18,14 +20,25 @@ class TicTacToe {
   }
 
   placePiece() {
+    console.log(`${this.onDeck} Player's turn to place piece`);
+    prompt.start();
+    prompt.get(['X_Position', 'Y_Position'], (err, results) => {
+      let xCorrdinates = results.X_Position;
+      let yCorrdinates = results.Y_Position;
+
+      this.matrix[yCorrdinates][xCorrdinates] = this.onDeck;
+      this.onDeck = (this.onDeck === 'X' ? 'O' : 'X');
+      this.checkIfWon();
+    })
+
     /* 
     prompt who player who is onDeck to place a piece based of the matrix coordinates
     the grid layout will look like
-    Y
-    2 [ '-', '-', '-' ]
-    1 [ 'x', 'o', '-' ]
-    0 [ '-', '-', '-' ]
          0    1    2    X
+    0 [ '-', '-', '-' ]
+    1 [ 'x', 'o', '-' ]
+    2 [ '-', '-', '-' ]
+    Y
     
     after placing piece, invoke check if won
     */
@@ -33,10 +46,12 @@ class TicTacToe {
 
   resetGame() {
     // reset board to be blank
+    this.matrix = [['-','-','-'], ['-','-','-'], ['-','-','-']];
     // reset onDeck back to 'x' player
-  }
-
-  startGame() {
-    
+    this.onDeck = 'X';
+    this.placePiece();
   }
 }
+
+let newGame = new TicTacToe();
+newGame.checkIfWon();
