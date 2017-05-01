@@ -2,6 +2,8 @@ console.log(['-','-','-']);
 console.log(['x','o', '-']);
 console.log(['-','-','-']);
 
+prompt('hello');
+
 class TicTacToe {
   constructor() {
     this.matrix = [['-','-','-'], ['-','-','-'], ['-','-','-']];
@@ -32,5 +34,9 @@ class TicTacToe {
   resetGame() {
     // reset board to be blank
     // reset onDeck back to 'x' player
+  }
+
+  startGame() {
+    
   }
 }
