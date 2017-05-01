@@ -19,16 +19,26 @@ class TicTacToe {
         // invoke place piece
   }
 
-  placePiece() {
-    console.log(`${this.onDeck} Player's turn to place piece`);
+  promptQuestion() {
     prompt.start();
     prompt.get(['X_Position', 'Y_Position'], (err, results) => {
       let xCorrdinates = results.X_Position;
       let yCorrdinates = results.Y_Position;
 
-      this.matrix[yCorrdinates][xCorrdinates] = this.onDeck;
-      this.onDeck = (this.onDeck === 'X' ? 'O' : 'X');
-      this.checkIfWon();
+      let position = this.matrix[yCorrdinates][xCorrdinates];
+      if ( position === '-') {
+        this.matrix[yCorrdinates][xCorrdinates] = this.onDeck;
+        this.onDeck = (this.onDeck === 'X' ? 'O' : 'X');
+        this.checkIfWon();
+      } else {
+        console.log('A player\'s piece is already there');
+        this.promptQuestion();
+      }
+    }
+  }
+
+  placePiece() {
+    console.log(`${this.onDeck} Player's turn to place piece`);
     })
 
     /* 
